@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "BEI - Descarga SAT CFDI (Recibidos/Egreso)",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting/Localization",
     "summary": "Descarga masiva de CFDI desde el SAT (e.firma) y conciliación automática con asientos contables.",
     "description": """
@@ -58,7 +58,7 @@ Flujo de uso
 Requisitos técnicos
 -------------------
 
-* Odoo 17.0 Community o Enterprise.
+* Odoo 18.0 Community o Enterprise.
 * e.firma (FIEL) vigente del contribuyente (certificado .cer + llave .key).
 * Librerías Python: ``zeep``, ``cryptography``, ``lxml``
   (incluidas en instalaciones estándar de Odoo).

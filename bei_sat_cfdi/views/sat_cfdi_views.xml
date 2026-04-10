@@ -39,7 +39,7 @@
   <record id="action_bei_sat_cfdi" model="ir.actions.act_window">
     <field name="name">CFDI's descargados</field>
     <field name="res_model">bei.sat.cfdi</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">list,form</field>
     <field name="search_view_id" ref="view_bei_sat_cfdi_search"/>
     <field name="context">{'search_default_sin_cuenta': 1}</field>
     <field name="help" type="html">
@@ -57,8 +57,8 @@
     <field name="name">bei.sat.cfdi.tree</field>
     <field name="model">bei.sat.cfdi</field>
     <field name="arch" type="xml">
-      <tree editable="top"
-   	        multi_edit="1"
+      <list editable="top"
+            multi_edit="1"
             open_form_view="True"
             decoration-success="move_id != False"
             decoration-warning="move_id == False">
@@ -79,7 +79,7 @@
         <field name="moneda" readonly="1" optional="hide"/>
         <field name="fecha_timbrado" readonly="1" optional="hide"/>
         <field name="move_id" readonly="1"/>
-      </tree>
+      </list>
     </field>
   </record>
 
@@ -162,7 +162,7 @@
           <notebook>
             <page string="Conceptos">
               <field name="concept_ids">
-                <tree editable="bottom">
+                <list editable="bottom">
                   <field name="clave_prod_serv"/>
                   <field name="cantidad"/>
                   <field name="clave_unidad"/>
@@ -171,7 +171,7 @@
                   <field name="valor_unitario"/>
                   <field name="importe"/>
                   <field name="descuento"/>
-                </tree>
+                </list>
                 <form>
                   <group>
                     <group>
@@ -191,14 +191,14 @@
 
                   <group string="Impuestos del concepto">
                     <field name="tax_line_ids">
-                      <tree editable="bottom">
+                      <list editable="bottom">
                         <field name="tipo"/>
                         <field name="impuesto"/>
                         <field name="tipo_factor"/>
                         <field name="tasa_o_cuota"/>
                         <field name="base"/>
                         <field name="importe"/>
-                      </tree>
+                      </list>
                     </field>
                   </group>
                 </form>

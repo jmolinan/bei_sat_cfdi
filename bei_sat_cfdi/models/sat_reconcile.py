@@ -245,7 +245,7 @@ class BeiSatCfdiReconcile(models.Model):
             ("amount", "=", float(self.total)),
             ("currency_id.name", "=", moneda),
             ("payment_type", "=", "outbound"),
-            ("state", "in", ("posted", "reconciled")),
+            ("state", "=", "posted"),
             "|",
             ("l10n_mx_edi_cfdi_uuid", "=", False),
             ("l10n_mx_edi_cfdi_uuid", "=", ""),
