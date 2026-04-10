@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Cron 1: Descarga diaria — crea nuevas solicitudes para cada credencial -->
+  <record id="ir_cron_bei_sat_descarga_recibidos" model="ir.cron">
+    <field name="name">SAT - Descarga CFDI Recibidos (diario)</field>
+    <field name="model_id" ref="base.model_ir_actions_server"/>
+    <field name="state">code</field>
+    <field name="code">env['bei.sat.download.service'].cron_download_egresos_recibidos()</field>
+    <field name="interval_number">1</field>
+    <field name="interval_type">days</field>
+    <field name="active">True</field>
+    <field name="nextcall">2026-03-06 07:00:00</field>
+  </record>
+
+  <!-- Cron 2: Polling — verifica solicitudes pendientes cada 15 min -->
+  <record id="ir_cron_bei_sat_verificar_pendientes" model="ir.cron">
+    <field name="name">SAT - Verificar solicitudes pendientes (polling)</field>
+    <field name="model_id" ref="bei_sat_cfdi.model_bei_sat_download_request"/>
+    <field name="state">code</field>
+    <field name="code">model.cron_verificar_pendientes()</field>
+    <field name="interval_number">15</field>
+    <field name="interval_type">minutes</field>
+    <field name="active">True</field>
+    <field name="nextcall">2026-03-07 00:00:00</field>
+  </record>
+</odoo>

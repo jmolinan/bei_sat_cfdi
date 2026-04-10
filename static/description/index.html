@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">Descarga masiva de CFDI desde el SAT</h2>
+    <h3 class="oe_slogan">Conecta Odoo con el SAT usando tu e.firma y automatiza la descarga y conciliación de comprobantes fiscales</h3>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">¿Qué problema resuelve?</h2>
+    <div class="oe_span12">
+      <p class="oe_mt32" style="font-size:15px; text-align:center; max-width:800px; margin:0 auto;">
+        Los equipos de contabilidad en México dedican horas cada mes a descargar manualmente
+        comprobantes del portal del SAT, importarlos y compararlos contra los registros de Odoo.
+        Este módulo elimina ese proceso por completo: la descarga, el almacenamiento y la
+        conciliación ocurren de forma <strong>automática y programada</strong> directamente dentro de Odoo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">Funcionalidades principales</h2>
+    <div class="oe_span6">
+      <p class="oe_mt32">
+        <b>Descarga automática vía web service oficial</b><br/>
+        Solicita y descarga paquetes ZIP de CFDI directamente al SAT usando la
+        e.firma (FIEL) del contribuyente, sin acceder manualmente al portal.
+      </p>
+      <p>
+        <b>CFDI emitidos y recibidos</b><br/>
+        Soporta todos los tipos de comprobante: Ingreso (I), Egreso (E),
+        Pago (P), Nómina (N) y Traslado (T).
+      </p>
+      <p>
+        <b>Almacenamiento estructurado</b><br/>
+        Cada CFDI se registra con UUID, emisor, receptor, importes, moneda,
+        método de pago y el XML original adjunto.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <p class="oe_mt32">
+        <b>Conciliación automática en dos pasos</b><br/>
+        Vincula cada CFDI con su asiento contable por UUID o por coincidencia
+        de RFC, fecha e importe. Para los que no tienen match, crea el asiento
+        directamente desde el XML con un solo clic.
+      </p>
+      <p>
+        <b>Tarea programada (cron)</b><br/>
+        Ejecuta solicitudes y descargas de forma automática en el horario
+        configurado, sin intervención del usuario.
+      </p>
+      <p>
+        <b>Multi-empresa</b><br/>
+        Cada compañía gestiona sus propias credenciales e.firma y CFDI
+        de forma completamente independiente.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">CFDI's descargados</h2>
+    <p style="text-align:center; color:#666; margin-bottom:16px;">
+      Todos los comprobantes descargados del SAT en una sola vista, con estado de conciliación, proveedor vinculado y cuenta contable.
+    </p>
+    <div class="oe_span12" style="text-align:center;">
+      <img src="pantalla-1.png" style="max-width:100%; border:1px solid #ddd; border-radius:4px;"/>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">Configuración de credenciales e.firma</h2>
+    <p style="text-align:center; color:#666; margin-bottom:16px;">
+      Registra el certificado (.cer) y llave privada (.key) de la FIEL por empresa. La descarga arranca con un solo clic o de forma automática vía cron.
+    </p>
+    <div class="oe_span12" style="text-align:center;">
+      <img src="pantalla-2.png" style="max-width:100%; border:1px solid #ddd; border-radius:4px;"/>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">Flujo de uso</h2>
+    <div class="oe_span12">
+      <ol style="font-size:15px; max-width:700px; margin:0 auto; line-height:2;">
+        <li><b>Registra credenciales e.firma</b> (.cer + .key) en <em>SAT &gt; Credenciales</em>.</li>
+        <li><b>Configura</b> el tipo de descarga (recibidos / emitidos) y tipo de comprobante.</li>
+        <li><b>Descarga</b> manualmente desde el wizard o deja que el cron la programe.</li>
+        <li><b>Revisa y concilia</b> en <em>SAT &gt; CFDI Descargados</em>: los conciliados quedan vinculados a su factura; los pendientes se resuelven en un solo paso.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan" style="color:#875A7B;">Requisitos técnicos</h2>
+    <div class="oe_span12" style="text-align:center;">
+      <ul style="display:inline-block; text-align:left; font-size:15px; line-height:2;">
+        <li>Odoo 17.0 Community o Enterprise</li>
+        <li>e.firma (FIEL) vigente del contribuyente (certificado .cer + llave .key)</li>
+        <li>Librerías Python: <code>zeep</code>, <code>cryptography</code>, <code>lxml</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

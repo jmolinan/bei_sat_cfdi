@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+  <!-- SEARCH -->
+  <record id="view_bei_sat_cfdi_search" model="ir.ui.view">
+    <field name="name">bei.sat.cfdi.search</field>
+    <field name="model">bei.sat.cfdi</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="uuid"/>
+        <field name="rfc_emisor"/>
+        <field name="nombre_emisor"/>
+        <field name="rfc_receptor"/>
+        <field name="fecha"/>
+        <field name="tipo_comprobante"/>
+        <field name="move_id"/>
+        <field name="download_request_id"/>
+
+        <filter string="Sin clasificar" name="sin_cuenta" domain="[('account_id_base','=',False)]"/>
+        <filter string="Sin conciliar" name="no_move" domain="[('move_id','=',False)]"/>
+        <filter string="Conciliados" name="with_move" domain="[('move_id','!=',False)]"/>
+        <filter string="Ingreso (I)" name="ingreso" domain="[('tipo_comprobante','=','I')]"/>
+        <filter string="Egreso (E)" name="egreso" domain="[('tipo_comprobante','=','E')]"/>
+        <filter string="Pago (P)" name="pago" domain="[('tipo_comprobante','=','P')]"/>
+        <filter string="Con XML" name="with_xml" domain="[('xml_attachment_id','!=',False)]"/>
+
+        <group expand="0" string="Agrupar por">
+          <filter string="Proveedor (RFC emisor)" name="grp_rfc_emisor" context="{'group_by':'rfc_emisor'}"/>
+          <filter string="Fecha" name="grp_fecha" context="{'group_by':'fecha'}"/>
+          <filter string="Tipo" name="grp_tipo" context="{'group_by':'tipo_comprobante'}"/>
+          <filter string="Empresa" name="grp_company" context="{'group_by':'company_id'}"/>
+          <filter string="Solicitud de descarga" name="grp_sol_descarga" context="{'group_by':'download_request_id'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <!-- ACTION -->
+  <record id="action_bei_sat_cfdi" model="ir.actions.act_window">
+    <field name="name">CFDI's descargados</field>
+    <field name="res_model">bei.sat.cfdi</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_bei_sat_cfdi_search"/>
+    <field name="context">{'search_default_sin_cuenta': 1}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Aquí verás los CFDI descargados del SAT.
+      </p>
+      <p>
+        En el siguiente paso agregamos el asistente de conciliación contra account.move.
+      </p>
+    </field>
+  </record>
+
+  <!-- TREE -->
+  <record id="view_bei_sat_cfdi_tree" model="ir.ui.view">
+    <field name="name">bei.sat.cfdi.tree</field>
+    <field name="model">bei.sat.cfdi</field>
+    <field name="arch" type="xml">
+      <tree editable="top"
+   	        multi_edit="1"
+            open_form_view="True"
+            decoration-success="move_id != False"
+            decoration-warning="move_id == False">
+        <header>
+          <button name="action_create_moves" type="object"
+                  string="Conciliar seleccionados" class="btn-primary"/>
+        </header>
+        <field name="company_id" readonly="1" optional="hide"/>
+        <field name="fecha" readonly="1"/>
+        <field name="uuid" readonly="1"/>
+        <field name="tipo_comprobante" readonly="1"/>
+        <field name="rfc_emisor" readonly="1"/>
+        <field name="nombre_emisor" readonly="1"/>
+        <field name="partner_id" domain="[('supplier_rank','&gt;',0)]"/>
+        <field name="account_id_base" domain="[('deprecated','=',False)]"/>
+        <field name="subtotal" readonly="1"/>
+        <field name="total" readonly="1"/>
+        <field name="moneda" readonly="1" optional="hide"/>
+        <field name="fecha_timbrado" readonly="1" optional="hide"/>
+        <field name="move_id" readonly="1"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- FORM -->
+  <record id="view_bei_sat_cfdi_form" model="ir.ui.view">
+    <field name="name">bei.sat.cfdi.form</field>
+    <field name="model">bei.sat.cfdi</field>
+    <field name="arch" type="xml">
+      <form string="CFDI SAT">
+        <header>
+          <button name="action_create_moves"
+                  string="Crear Poliza"
+                  type="object"
+                  class="oe_highlight"
+                  invisible="move_id != False"/>
+          <button name="%(action_bei_sat_download_wizard)d"
+                  type="action"
+                  string="Nueva descarga SAT"/>
+        </header>
+        <sheet>
+          <div class="oe_title">
+            <h1>
+              <field name="uuid" readonly="1"/>
+            </h1>
+          </div>
+
+          <group>
+            <group>
+              <field name="company_id" readonly="1"/>
+              <field name="tipo_comprobante" readonly="1"/>
+              <field name="version" readonly="1"/>
+              <field name="serie" readonly="1"/>
+              <field name="folio" readonly="1"/>
+            </group>
+            <group>
+              <field name="fecha" readonly="1"/>
+              <field name="fecha_timbrado" readonly="1"/>
+              <field name="lugar_expedicion" readonly="1"/>
+              <field name="move_id" readonly="1"/>
+            </group>
+          </group>
+
+          <group string="Clasificacion contable">
+            <field name="partner_id" domain="[('supplier_rank','&gt;',0)]"/>
+            <field name="account_id_base" domain="[('deprecated','=',False)]"/>
+          </group>
+
+          <group string="Emisor / Receptor">
+            <group>
+              <field name="rfc_emisor" readonly="1"/>
+              <field name="nombre_emisor" readonly="1"/>
+            </group>
+            <group>
+              <field name="rfc_receptor" readonly="1"/>
+              <field name="nombre_receptor" readonly="1"/>
+            </group>
+          </group>
+
+          <group string="Pago / Importes">
+            <group>
+              <field name="uso_cfdi" readonly="1"/>
+              <field name="metodo_pago" readonly="1"/>
+              <field name="forma_pago" readonly="1"/>
+            </group>
+            <group>
+              <field name="moneda" readonly="1"/>
+              <field name="tipo_cambio" readonly="1"/>
+              <field name="subtotal" readonly="1"/>
+              <field name="descuento" readonly="1"/>
+              <field name="total" readonly="1"/>
+            </group>
+          </group>
+
+          <group string="XML">
+            <field name="xml_filename" readonly="1"/>
+            <field name="xml_attachment_id" readonly="1"/>
+            <field name="download_request_id" readonly="1"/>
+          </group>
+
+          <notebook>
+            <page string="Conceptos">
+              <field name="concept_ids">
+                <tree editable="bottom">
+                  <field name="clave_prod_serv"/>
+                  <field name="cantidad"/>
+                  <field name="clave_unidad"/>
+                  <field name="unidad"/>
+                  <field name="descripcion"/>
+                  <field name="valor_unitario"/>
+                  <field name="importe"/>
+                  <field name="descuento"/>
+                </tree>
+                <form>
+                  <group>
+                    <group>
+                      <field name="clave_prod_serv"/>
+                      <field name="no_identificacion"/>
+                      <field name="cantidad"/>
+                      <field name="clave_unidad"/>
+                      <field name="unidad"/>
+                    </group>
+                    <group>
+                      <field name="descripcion"/>
+                      <field name="valor_unitario"/>
+                      <field name="importe"/>
+                      <field name="descuento"/>
+                    </group>
+                  </group>
+
+                  <group string="Impuestos del concepto">
+                    <field name="tax_line_ids">
+                      <tree editable="bottom">
+                        <field name="tipo"/>
+                        <field name="impuesto"/>
+                        <field name="tipo_factor"/>
+                        <field name="tasa_o_cuota"/>
+                        <field name="base"/>
+                        <field name="importe"/>
+                      </tree>
+                    </field>
+                  </group>
+                </form>
+              </field>
+            </page>
+
+<!--            <page string="Auditoría">-->
+<!--              <group>-->
+<!--                <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                <field name="activity_ids" widget="mail_activity"/>-->
+<!--              </group>-->
+<!--            </page>-->
+          </notebook>
+        </sheet>
+
+        <div class="oe_chatter">
+          <field name="message_follower_ids" widget="mail_followers"/>
+          <field name="activity_ids" widget="mail_activity"/>
+          <field name="message_ids" widget="mail_thread"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vista heredada res.partner: campo account_id_base -->
+  <record id="view_partner_sat_account_form" model="ir.ui.view">
+    <field name="name">res.partner.sat.account</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='sales_purchases']" position="after">
+        <page string="SAT / CFDI" name="sat_cfdi">
+          <group string="Configuracion importacion CFDI">
+            <field name="account_id_base"
+                   domain="[('deprecated','=',False)]"/>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- MENU -->
+  <menuitem
+    id="menu_bei_sat_cfdi_root"
+    name="CFDI's descargados SAT"
+    parent="account.menu_finance_entries"
+    action="action_bei_sat_cfdi"
+    sequence="250"
+    groups="bei_sat_cfdi.group_sat_cfdi_manager"
+  />
+  </data>
+</odoo>

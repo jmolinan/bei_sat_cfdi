@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu Root -->
+        <menuitem id="menu_bei_sat_root"
+                  name="SAT"/>
+        <!-- credenciales -->
+        <menuitem id="bei_sat_credential"
+                  name="Certificados SAT"
+                  parent="menu_bei_sat_root"
+                  action="action_bei_sat_credential"
+                  groups="base.group_system"
+                  sequence="10"/>
+
+        <menuitem id="bei_sat_download_request"
+                  name="Solicitudes"
+                  parent="menu_bei_sat_root"
+                  action="action_bei_sat_download_request"
+                  sequence="20"/>
+
+        <menuitem id="bei_sat_cfdi"
+                  name="CFDI's descargados"
+                  parent="menu_bei_sat_root"
+                  action="action_bei_sat_cfdi"
+                  sequence="30"/>
+
+
+    </data>
+</odoo>

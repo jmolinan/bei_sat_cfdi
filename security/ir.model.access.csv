@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bei_sat_credential,bei.sat.credential,model_bei_sat_credential,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_download_request,bei.sat.download.request,model_bei_sat_download_request,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_download_package,bei.sat.download.package,model_bei_sat_download_package,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_cfdi,bei.sat.cfdi,model_bei_sat_cfdi,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_cfdi_concept,bei.sat.cfdi.concept,model_bei_sat_cfdi_concept,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_cfdi_concept_tax,bei.sat.cfdi.concept.tax,model_bei_sat_cfdi_concept_tax,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_dowload_wizard,bei.sat.download.wizard,model_bei_sat_download_wizard,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1
+access_bei_sat_download_service,bei.sat.download.service,model_bei_sat_download_service,bei_sat_cfdi.group_sat_cfdi_manager,1,1,1,1

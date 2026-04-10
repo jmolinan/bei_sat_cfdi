@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WIZARD FORM -->
+<odoo>
+  <record id="view_bei_sat_download_wizard_form" model="ir.ui.view">
+    <field name="name">bei.sat.download.wizard.form</field>
+    <field name="model">bei.sat.download.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Descargar CFDI SAT">
+        <group>
+          <field name="credential_id" options="{'no_create': True}"/>
+          <field name="tipo_documento"/>
+          <field name="tipo_comprobante"/>
+        </group>
+        <group>
+          <field name="date_start"/>
+          <field name="date_end"/>
+        </group>
+        <footer>
+          <button string="Cancelar" special="cancel" class="btn-secondary"/>
+          <button name="action_download" string="Descargar" type="object" class="btn-primary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_bei_sat_download_wizard" model="ir.actions.act_window">
+    <field name="name">Descargar CFDI SAT</field>
+    <field name="res_model">bei.sat.download.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+</odoo>

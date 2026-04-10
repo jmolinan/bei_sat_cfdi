@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- security/security.xml -->
+<odoo>
+<data>
+    <record id="group_sat_cfdi_manager" model="res.groups">
+    <field name="name">SAT CFDI Manager</field>
+    <field name="category_id" ref="base.module_category_accounting"/>
+    </record>
+</data>
+</odoo>

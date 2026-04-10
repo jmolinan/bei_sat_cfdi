@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+  <!-- ACTION -->
+  <record id="action_bei_sat_download_request" model="ir.actions.act_window">
+    <field name="name">Solicitudes SAT</field>
+    <field name="res_model">bei.sat.download.request</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'default_company_id': allowed_company_ids[0]}</field>
+  </record>
+
+  <!-- LIST -->
+  <record id="view_bei_sat_download_request_list" model="ir.ui.view">
+    <field name="name">bei.sat.download.request.list</field>
+    <field name="model">bei.sat.download.request</field>
+    <field name="arch" type="xml">
+      <tree decoration-info="state == 'verifying'"
+            decoration-success="state == 'done'"
+            decoration-danger="state == 'error'"
+            decoration-muted="state == 'draft'">
+        <field name="create_date"/>
+        <field name="company_id"/>
+        <field name="credential_id"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="tipo_documento"/>
+        <field name="tipo_comprobante"/>
+        <field name="sat_id_solicitud"/>
+        <field name="sat_estado_solicitud"/>
+        <field name="sat_codigo_estado_solicitud"/>
+        <field name="state" widget="badge"
+               decoration-info="state == 'verifying'"
+               decoration-success="state == 'done'"
+               decoration-danger="state == 'error'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- FORM -->
+  <record id="view_bei_sat_download_request_form" model="ir.ui.view">
+    <field name="name">bei.sat.download.request.form</field>
+    <field name="model">bei.sat.download.request</field>
+    <field name="arch" type="xml">
+      <form string="Solicitud SAT">
+        <header>
+          <button name="action_verificar"
+                  string="Verificar ahora"
+                  type="object"
+                  class="oe_highlight"
+                  invisible="state not in ('requested', 'verifying')"/>
+          <button name="action_run_now"
+                  string="Re-solicitar"
+                  type="object"
+                  invisible="state not in ('draft', 'error')"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="draft,requested,verifying,done"/>
+        </header>
+        <sheet>
+          <group>
+            <group string="Configuración">
+              <field name="company_id" readonly="1"/>
+              <field name="credential_id" readonly="1"/>
+              <field name="tipo_documento" readonly="1"/>
+              <field name="tipo_comprobante" readonly="1"/>
+              <field name="date_start" readonly="1"/>
+              <field name="date_end" readonly="1"/>
+            </group>
+            <group string="Respuesta SAT">
+              <field name="sat_id_solicitud" readonly="1"/>
+              <field name="sat_estado_solicitud" readonly="1"/>
+              <field name="sat_codestatus" readonly="1"/>
+              <field name="sat_codigo_estado_solicitud" readonly="1"/>
+              <field name="sat_numero_cfdis" readonly="1"/>
+
+              <field name="sat_mensaje" readonly="1"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="Paquetes" name="paquetes">
+              <field name="package_ids">
+                <tree>
+                  <field name="package_id"/>
+                  <field name="downloaded" widget="boolean_toggle"/>
+                  <field name="attachment_id" widget="many2one_avatar"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Error" name="error" invisible="state != 'error'">
+              <field name="last_error" readonly="1"/>
+            </page>
+          </notebook>
+        </sheet>
+
+        <div class="oe_chatter">
+          <field name="message_follower_ids" widget="mail_followers"/>
+          <field name="activity_ids" widget="mail_activity"/>
+          <field name="message_ids" widget="mail_thread"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <menuitem
+    id="menu_bei_sat_download_request"
+    name="Solicitudes SAT"
+    parent="account.menu_finance_configuration"
+    action="action_bei_sat_download_request"
+    sequence="998"
+    groups="bei_sat_cfdi.group_sat_cfdi_manager"
+  />
+  </data>
+</odoo>
